@@ -1,6 +1,7 @@
 const express = require('express');
 const topicRoute = require('./topics');
 const subscriberRoute = require('./subscriber');
+const publishRoute = require('./publish');
 
 const router = express.Router();
 
@@ -12,6 +13,10 @@ const defaultRoutes = [
 	{
 		path: '/subscribe',
 		route: subscriberRoute,
+	},
+	{
+		path: '/publish',
+		route: publishRoute,
 	},
 ];
 

@@ -1,17 +1,14 @@
 const mongoose = require('mongoose');
 const { toJSON } = require('./plugins');
 
-const topicsSchema = mongoose.Schema(
+const messagesSchema = mongoose.Schema(
 	{
 		topic: {
 			type: String,
 			required: true,
 			trim: true,
-			unique: true,
 		},
-		subscribers: {
-			type: Array,
-		},
+		data: mongoose.Mixed,
 	},
 	{
 		timestamps: true,
@@ -19,11 +16,11 @@ const topicsSchema = mongoose.Schema(
 );
 
 // add plugin that converts mongoose to json
-topicsSchema.plugin(toJSON);
+messagesSchema.plugin(toJSON);
 
 /**
- * @typedef Topics
+ * @typedef Messages
  */
-const Topics = mongoose.model('Topics', topicsSchema);
+const Messages = mongoose.model('Messages', messagesSchema);
 
-module.exports = Topics;
+module.exports = Messages;

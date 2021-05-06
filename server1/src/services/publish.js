@@ -1,29 +1,18 @@
-const httpStatus = require('http-status');
+const { Messages } = require('../../../src/models');
+const TopicService = require('./topics');
 const ApiError = require('../../../src/utils/ApiError');
-const { Topics } = require('../../../src/models');
+const httpStatus = require('http-status');
 
 /**
- * Get topic
- * @param {ObjectId} id
- * @returns {Promise<Topics>}
+ * Publish Topic
+ * @param {Any} data
+ * @returns {Promise<Messages>}
  */
-const getTopic = async (topic) => {
-	return Topics.findOne({ topic });
-};
-
-/**
- * Create a topic
- * @param {Object} body
- * @returns {Promise<Topics>}
- */
-
-const createTopic = async (body) => {
-	const topic = await getTopic(body.topic);
-	if (await getTopic(body.topic)) {
-		throw new ApiError(httpStatus.BAD_REQUEST, 'Topic already exists');
+const publishTopic = async ({ data, topic }) => {
+	if (!(await TopicService.getTopic(topic))) {
+		throw new ApiError(httpStatus.NOT_FOUND, 'Topic not found');
 	}
-	const topic = await Topics.create(body);
-	return topic;
+	return Messages.create({ ...data, topic });
 };
 
-module.exports = { createTopic, getTopic };
+module.exports = { publishTopic };
