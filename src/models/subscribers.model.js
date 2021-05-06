@@ -3,15 +3,14 @@ const { toJSON, paginate } = require('./plugins');
 
 const subscribersSchema = mongoose.Schema(
 	{
-		topicID: {
+		subscriber: {
 			type: String,
 			required: true,
 			trim: true,
+			unique: true,
 		},
-        subscriber: {
-			type: String,
-			required: true,
-			trim: true,
+		topics: {
+			type: Array,
 		},
 	},
 	{

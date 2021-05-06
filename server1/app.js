@@ -7,7 +7,7 @@ const cors = require('cors');
 const httpStatus = require('http-status');
 const config = require('../src/config/config');
 const morgan = require('../src/config/morgan');
-const routes = require('./routes');
+const routes = require('./src/routes');
 const { errorConverter, errorHandler } = require('../src/middlewares/error');
 const ApiError = require('../src/utils/ApiError');
 

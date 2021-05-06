@@ -9,6 +9,9 @@ const topicsSchema = mongoose.Schema(
 			trim: true,
 			unique: true,
 		},
+		subscribers: {
+			type: Array,
+		},
 	},
 	{
 		timestamps: true,

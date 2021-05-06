@@ -1,4 +1,5 @@
 module.exports = {
 	Topics: require('./topics.model'),
-	Subscribers: require('./subscribers.model'),
+	// Published: require('./published.model'),
+	// Subscribers: require('./subscribers.model'),
 };
