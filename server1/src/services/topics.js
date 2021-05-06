@@ -1,6 +1,7 @@
 const httpStatus = require('http-status');
 const ApiError = require('../../../src/utils/ApiError');
 const { Topics } = require('../../../src/models');
+const { url2 } = require('../../../src/config/config');
 
 /**
  * Get topic
@@ -8,7 +9,6 @@ const { Topics } = require('../../../src/models');
  * @returns {Promise<Topics>}
  */
 const getTopic = async (topic) => {
-	console.log(topic);
 	return Topics.findOne({ topic });
 };
 
@@ -26,4 +26,26 @@ const createTopic = async (body) => {
 	return await Topics.create(body);
 };
 
-module.exports = { createTopic, getTopic };
+/**
+ * Subscribe to a topic
+ * @param {String} topic
+ * @param {String} subscriber
+ * @returns {Promise<Topics>}
+ */
+
+const subscribeToTopic = async (topic, subscriber) => {
+	const topicData = await getTopic(topic);
+
+	if (topicData.subscribers.includes(subscriber)) {
+		throw new ApiError(httpStatus.BAD_REQUEST, 'Already subscribed');
+	}
+
+	await Topics.updateOne({ topic }, { $addToSet: { subscribers: [subscriber] } });
+
+	return Object.freeze({
+		url: `${url2}/subscribers/${subscriber}`,
+		topic,
+	});
+};
+
+module.exports = { createTopic, getTopic, subscribeToTopic };

@@ -13,7 +13,7 @@ const getTopic = catchAsync(async (req, res) => {
 	if (!topic) {
 		throw new ApiError(httpStatus.NOT_FOUND, 'Topic not found');
 	}
-	res.send(topic);
+	res.status(httpStatus.OK).send(topic);
 });
 
 module.exports = { createTopic, getTopic };

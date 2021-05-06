@@ -7,7 +7,6 @@ const subscribersSchema = mongoose.Schema(
 			type: String,
 			required: true,
 			trim: true,
-			unique: true,
 		},
 		topics: {
 			type: Array,
