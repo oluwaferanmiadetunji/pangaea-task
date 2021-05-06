@@ -43,7 +43,7 @@ const subscribeToTopic = async (topic, subscriber) => {
 	await Topics.updateOne({ topic }, { $addToSet: { subscribers: [subscriber] } });
 
 	return Object.freeze({
-		url: `${url2}/subscribers/${subscriber}`,
+		url: `${url2}/${subscriber}`,
 		topic,
 	});
 };

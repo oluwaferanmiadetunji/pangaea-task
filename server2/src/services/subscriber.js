@@ -1,33 +1,42 @@
-const httpStatus = require('http-status');
-const ApiError = require('../../../src/utils/ApiError');
-const { Subscribers } = require('../../../src/models');
-const TopicService = require('./topics');
+const { Subscribers, Messages } = require('../../../src/models');
 
 /**
  * Get a subscriber
  * @param {ObjectId} Subscribers
  * @returns {Promise<Subscribers>}
  */
-const getSubscriber = async (subscriber) => {
-	return Subscribers.findOne({ subscriber });
-};
+const getSubscriber = async (subscriber) => Subscribers.findOne({ subscriber });
 
 /**
- * Subscribe to a topic
- * @param {Object} body
+ * Get all topics subscribed to
+ * @param {ObjectId} Subscribers
  * @returns {Promise<Subscribers>}
  */
+const getAllTopicsSubscribedTo = async (subscriber) => (await getSubscriber(subscriber)).topics;
 
-const subscribe = async ({ subscriber, topic }) => {
-	if (!(await TopicService.getTopic(topic))) {
-		throw new ApiError(httpStatus.NOT_FOUND, 'Topic not found');
+/**
+ * Get message by topic
+ * @param {ObjectId} topic
+ * @returns {Promise<Messages>}
+ */
+const getMessageByTopic = async (topic) => await Messages.find({ topic }).sort({ createdAt: -1 });
+
+/**
+ * Get all subscribed data
+ * @param {String} subscriber
+ * @returns {Promise<Subscribers>}
+ */
+const getAllData = async (subscriber) => {
+	const topics = await getAllTopicsSubscribedTo(subscriber);
+
+	let AllData = [];
+
+	for (let i = 0; i < topics.length; i++) {
+		const data = await getMessageByTopic(topics[i]);
+		AllData.push(...data);
 	}
 
-	const data = await TopicService.subscribeToTopic(topic, subscriber);
-
-	await Subscribers.create({ subscriber, topic });
-
-	return data;
+	return AllData;
 };
 
-module.exports = { subscribe, getSubscriber };
+module.exports = { getAllData, getSubscriber };

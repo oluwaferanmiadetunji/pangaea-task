@@ -6,6 +6,5 @@ const { SubscriberController } = require('../controllers');
 const router = express.Router();
 
 router.post('/:topic', validate(SubscriberValidation.subscribe), SubscriberController.subscribe);
-router.get('/:subscriber', validate(SubscriberValidation.getSubscriber), SubscriberController.getSubscriber);
 
 module.exports = router;

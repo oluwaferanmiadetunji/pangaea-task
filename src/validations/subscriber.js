@@ -12,7 +12,14 @@ const getSubscriber = {
 	}),
 };
 
+const getData = {
+	params: Joi.object().keys({
+		subscriber: Joi.string().required().trim(),
+	}),
+};
+
 module.exports = {
 	subscribe,
 	getSubscriber,
+	getData,
 };

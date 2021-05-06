@@ -25,7 +25,13 @@ const subscribe = async ({ subscriber, topic }) => {
 
 	const data = await TopicService.subscribeToTopic(topic, subscriber);
 
-	await Subscribers.create({ subscriber, topic });
+	const subscriberData = await getSubscriber(subscriber);
+
+	if (!subscriberData) {
+		await Subscribers.create({ subscriber, topic });
+	} else {
+		await Subscribers.updateOne({ subscriber }, { $addToSet: { topics: [topic] } });
+	}
 
 	return data;
 };
