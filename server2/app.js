@@ -7,7 +7,7 @@ const cors = require('cors');
 const httpStatus = require('http-status');
 const config = require('../src/config/config');
 const morgan = require('../src/config/morgan');
-const routes = require('./routes');
+const routes = require('./src/routes');
 const { errorConverter, errorHandler } = require('../src/middlewares/error');
 const ApiError = require('../src/utils/ApiError');
 
@@ -38,12 +38,12 @@ app.use(compression());
 app.use(cors());
 app.options('*', cors());
 
-// v1 api routes
+// api routes
 app.use('/', routes);
 
 // send back a 404 error for any unknown api request
 app.use((req, res, next) => {
-	next(new ApiError(httpStatus.NOT_FOUND, 'Not found'));
+	next(new ApiError(httpStatus.NOT_FOUND, 'Route not found'));
 });
 
 // convert error to ApiError, if needed
