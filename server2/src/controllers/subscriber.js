@@ -13,7 +13,7 @@ const getAllData = catchAsync(async (req, res) => {
 	}
 
 	const data = await SubscriberService.getAllData(trimSubscriber(req.params.subscriber));
-	ReceiverService(data);
+	ReceiverService(data, res);
 
 	res.status(httpStatus.OK).send(data);
 });
