@@ -17,6 +17,12 @@ module.exports = ({ topic, data }) => {
 			});
 			channel.publish(exchange, topic, Buffer.from(msg));
 			console.log(" [x] Sent %s:'%s'", topic, msg);
+
+			setTimeout(() => {
+				channel.close(function () {
+					connection.close();
+				});
+			}, 500);
 		});
 	});
 };
