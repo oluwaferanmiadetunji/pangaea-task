@@ -29,14 +29,14 @@ const getMessageByTopic = async (topic) => await Messages.find({ topic }).sort({
 const getAllData = async (subscriber) => {
 	const topics = await getAllTopicsSubscribedTo(subscriber);
 
-	let AllData = [];
+	// let AllData = [];
 
-	for (let i = 0; i < topics.length; i++) {
-		const data = await getMessageByTopic(topics[i]);
-		AllData.push(...data);
-	}
+	// for (let i = 0; i < topics.length; i++) {
+	// 	const data = await getMessageByTopic(topics[i]);
+	// 	AllData.push(...data);
+	// }
 
-	return AllData;
+	return topics;
 };
 
 module.exports = { getAllData, getSubscriber };

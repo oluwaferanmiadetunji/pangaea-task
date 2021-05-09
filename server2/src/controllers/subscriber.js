@@ -3,6 +3,7 @@ const ApiError = require('../../../src/utils/ApiError');
 const catchAsync = require('../../../src/utils/catchAsync');
 const { SubscriberService } = require('../services');
 const { trimSubscriber } = require('../../../src/utils/helpers');
+const { ReceiverService } = require('../services');
 
 const getAllData = catchAsync(async (req, res) => {
 	const subscriber = await SubscriberService.getSubscriber(trimSubscriber(req.params.subscriber));
@@ -12,6 +13,7 @@ const getAllData = catchAsync(async (req, res) => {
 	}
 
 	const data = await SubscriberService.getAllData(trimSubscriber(req.params.subscriber));
+	ReceiverService(data);
 
 	res.status(httpStatus.OK).send(data);
 });

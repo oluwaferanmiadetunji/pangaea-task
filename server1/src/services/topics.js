@@ -5,11 +5,19 @@ const { url2 } = require('../../../src/config/config');
 
 /**
  * Get topic
- * @param {ObjectId} id
+ * @param {String} topic
  * @returns {Promise<Topics>}
  */
 const getTopic = async (topic) => {
 	return Topics.findOne({ topic });
+};
+
+/**
+ * Get all topics
+ * @returns {Promise<Topics>}
+ */
+const getTopics = async () => {
+	return Topics.find({}, 'topic createdAt');
 };
 
 /**
@@ -48,4 +56,4 @@ const subscribeToTopic = async (topic, subscriber) => {
 	});
 };
 
-module.exports = { createTopic, getTopic, subscribeToTopic };
+module.exports = { createTopic, getTopic, subscribeToTopic, getTopics };

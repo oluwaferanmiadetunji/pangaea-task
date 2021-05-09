@@ -16,4 +16,10 @@ const getTopic = catchAsync(async (req, res) => {
 	res.status(httpStatus.OK).send(topic);
 });
 
-module.exports = { createTopic, getTopic };
+const getTopics = catchAsync(async (req, res) => {
+	const topics = await TopicService.getTopics();
+
+	res.status(httpStatus.OK).send(topics);
+});
+
+module.exports = { createTopic, getTopic, getTopics };
