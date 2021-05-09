@@ -10,9 +10,12 @@ const compression = require('compression');
 const cors = require('cors');
 const httpStatus = require('http-status');
 const morgan = require('../src/config/morgan');
-const routes = require('./src/routes');
 const { errorConverter, errorHandler } = require('../src/middlewares/error');
 const ApiError = require('../src/utils/ApiError');
+const routes = require('./src/routes');
+const publishRoutes = require('./src/routes/publish');
+const topicRoutes = require('./src/routes/topics');
+const subscribeRoutes = require('./src/routes/subscriber');
 
 const app = express();
 
@@ -42,7 +45,7 @@ app.use(cors());
 app.options('*', cors());
 
 // api routes
-app.use('/', routes);
+routes(app);
 
 // send back a 404 error for any unknown api request
 app.use((req, res, next) => {
